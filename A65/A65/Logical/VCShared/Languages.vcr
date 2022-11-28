@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?AutomationStudio Version="4.2.1.214"?>
+<Languages xmlns="http://br-automation.co.at/AS/VC/Project">
+  <Property Name="Default" Value="pt-BR"/>
+  <Property Name="FallBackLanguage" Value="en"/>
+  <Language ID="en">
+    <Property Name="BidiMode" Value="False"/>
+    <Property Name="Compile" Value="True"/>
+    <Property Name="Description" Value="English Language"/>
+    <Property Name="Index" Value="0"/>
+    <Property Name="InputMethod" Value="None"/>
+  </Language>
+  <Language ID="pt-BR">
+    <Property Name="BidiMode" Value="False"/>
+    <Property Name="Compile" Value="True"/>
+    <Property Name="Description" Value="Portuguese Language"/>
+    <Property Name="Index" Value="2"/>
+    <Property Name="InputMethod" Value="None"/>
+  </Language>
+</Languages>

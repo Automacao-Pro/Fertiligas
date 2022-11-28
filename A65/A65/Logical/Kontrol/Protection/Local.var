@@ -1,0 +1,89 @@
+(*Protection 59*)
+VAR
+	P59A_L1 : PgsProt62;
+	P59B_L1 : PgsProt62;
+	P59C_L1 : PgsProt62;
+	P59AB_L1 : PgsProt62;
+	P59BC_L1 : PgsProt62;
+	P59CA_L1 : PgsProt62;
+	P59V1_L1 : PgsProt62;
+	P59Q_L1 : PgsProt62;
+	P59G_L1 : PgsProt62;
+	P59A_L2 : PgsProt62;
+	P59B_L2 : PgsProt62;
+	P59C_L2 : PgsProt62;
+	P59AB_L2 : PgsProt62;
+	P59BC_L2 : PgsProt62;
+	P59CA_L2 : PgsProt62;
+	P59V1_L2 : PgsProt62;
+	P59Q_L2 : PgsProt62;
+	P59G_L2 : PgsProt62;
+END_VAR
+(*Protection 27*)
+VAR
+	P27A_L1 : PgsProt62;
+	P27B_L1 : PgsProt62;
+	P27C_L1 : PgsProt62;
+	P27AB_L1 : PgsProt62;
+	P27BC_L1 : PgsProt62;
+	P27CA_L1 : PgsProt62;
+	P27V1_L1 : PgsProt62;
+	P27A_L2 : PgsProt62;
+	P27B_L2 : PgsProt62;
+	P27C_L2 : PgsProt62;
+	P27AB_L2 : PgsProt62;
+	P27BC_L2 : PgsProt62;
+	P27CA_L2 : PgsProt62;
+	P27V1_L2 : PgsProt62;
+END_VAR
+(*Protection 81*)
+VAR
+	P81O_L1 : PgsProt62;
+	P81O_L2 : PgsProt62;
+	P81U_L1 : PgsProt62;
+	P81U_L2 : PgsProt62;
+END_VAR
+(*Protection 32*)
+VAR
+	P32OP_L1 : PgsProt62;
+	P32UP_L1 : PgsProt62;
+	P32OQ_L1 : PgsProt62;
+	P32UQ_L1 : PgsProt62;
+END_VAR
+(*Protection 24*)
+VAR
+	P24_L1 : PgsProt24;
+END_VAR
+(*Protection 40*)
+VAR
+	P40_L1 : PgsProt40;
+	P40_L2 : PgsProt40;
+END_VAR
+(*Protection 50*)
+VAR
+	P50PA_L1 : PgsProt62;
+	P50PB_L1 : PgsProt62;
+	P50PC_L1 : PgsProt62;
+	P50Q_L1 : PgsProt62;
+	P50G_L1 : PgsProt62;
+	P50PA_L2 : PgsProt62;
+	P50PB_L2 : PgsProt62;
+	P50PC_L2 : PgsProt62;
+	P50Q_L2 : PgsProt62;
+	P50G_L2 : PgsProt62;
+END_VAR
+(*Protection 51*)
+VAR
+	P51VA_L1 : PgsProt51V;
+	P51VB_L1 : PgsProt51V;
+	P51VC_L1 : PgsProt51V;
+	P51PA_L1 : PgsProt51V;
+	P51PB_L1 : PgsProt51V;
+	P51PC_L1 : PgsProt51V;
+	P51Q_L1 : PgsProt51V;
+	P51G_L1 : PgsProt51V;
+END_VAR
+(*Insert your comment here.*)
+VAR
+	P50BF : PgsProt50BF;
+END_VAR

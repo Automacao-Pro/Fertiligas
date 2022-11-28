@@ -1,0 +1,41 @@
+(*I/O*)
+VAR
+	A65 : PgsA65;
+END_VAR
+(*Controls*)
+VAR
+	avr : PgsAVR := (Parameter:=(CtrlManual:=(CmIf:=(Enable:=FALSE,dRefOn:=0.1,dRefOff:=0.1,PID:=(Kp:=0.004,Ti:=0.05,Td:=0.0,Tf:=1.0,Kwd:=1.2)),CmUf:=(Enable:=FALSE,dRefOn:=0.1,dRefOff:=0.1,PID:=(Kp:=0.002,Ti:=0.05,Td:=0.0,Tf:=1.0,Kwd:=1.2)),CmIm:=(Enable:=FALSE),Ctrl:=PGS_AVR_CM_OFF,EnableOL:=FALSE),CtrlAuto:=(SoftStart:=(RefUm:=1.0,dRefOn:=0.05,dRefOff:=0.0,Offset:=0,RefUm0:=0.3948,FFTmin:=0,FFTmax:=5.0),CaUm0:=(Enable:=FALSE,Ref:=1.0,RefMax:=1.2,RefMin:=0.8,dRefOn:=0.07,dRefOff:=0.07,Kdp:=0.0,PID:=(Kp:=0.003,Ti:=0.1,Td:=0.05,Tf:=1.0,Kwd:=1.2)),CaUm1:=(Enable:=FALSE),CaQm:=(Enable:=FALSE,Ref:=-0.08,RefMax:=0.5,RefMin:=-0.5,dRefOn:=0.01,dRefOff:=0.01,PID:=(Kp:=0.0006,Ti:=1.0,Td:=0.0,Tf:=1.0,Kwd:=1.2),L2max:=1.2,L2min:=0.8,Kdp:=0.1,PIDU:=(Kp:=0.002,Ti:=0.1,Td:=0.05,Tf:=1.0,Kwd:=1.2)),CaPf:=(Enable:=FALSE,Ref:=-0.1,RefMax:=0.3,RefMin:=-0.3,dRefOn:=0.05,dRefOff:=0.05,PID:=(Kp:=0.0006,Ti:=0.8,Td:=0.0,Tf:=1.0,Kwd:=1.2),L2max:=1.2,L2min:=0.8,Kdp:=0.1,PIDU:=(Kp:=0.002,Ti:=0.09,Td:=0.05,Tf:=1.0,Kwd:=1.2))),Limiter:=(Luh:=(Enable:=FALSE,Un:=1.0,Fn:=0.98,Kuh:=1.0,PID:=(Kp:=0.003,Ti:=0.1,Td:=0.05,Tf:=1.0,Kwd:=1.2)),Lifh:=(Enable:=FALSE,SetPoint:=1.1312,Curve:=PGS_AVR_CV_00,Time:=10.0,PID:=(Kp:=0.004,Ti:=0.05,Td:=0.0,Tf:=1.0,Kwd:=1.2)),Lifl:=(Enable:=FALSE,SetPoint:=0.2262,PID:=(Kp:=0.004,Ti:=0.05,Td:=0.0,Tf:=1.0,Kwd:=1.2)),Lifhh:=(Enable:=FALSE,SetPoint:=1.3574,PID:=(Kp:=0.004,Ti:=0.05,Td:=0.0,Tf:=1.0,Kwd:=1.2)),Limh:=(Enable:=FALSE),Lpq:=(Enable:=FALSE))),CtrlOnline:=PGS_AVR_CA_PF);
+	gov : PgsGOV := (Parameter:=(CtrlManual:=(CmPos:=(Enable:=FALSE,dRefOn:=0.1,dRefOff:=0.1,RefMax:=1.0,RefMin:=0.0)),CtrlAuto:=(SoftStart:=(Pos0:=0.25,dPos:=0.1,Rpm0:=0.0,Rpm1:=0.2,Rpm2:=0.8,RpmBrake:=0.0,dRpmOn:=0.05,dRpmOff:=0.05,TRpm1:=120,TRpm2:=300),CaRpm0:=(Enable:=FALSE,Ref:=1.0,RefMax:=1.2,RefMin:=0.0,dRefOn:=0.05,dRefOff:=0.05,Kdp:=0.0,PosMax:=0.95,PID:=(Kp:=0.003,Ti:=0.15,Td:=0.0,Tf:=1.0,Kwd:=1.0)),CaRpm1:=(Enable:=FALSE,Ref:=1.025,RefMax:=1.1,RefMin:=0.9,dRefOn:=0.01,dRefOff:=0.01,Kdp:=0.1,PosMax:=0.95,PID:=(Kp:=0.003,Ti:=0.15,Td:=0.0,Tf:=1.0,Kwd:=1.0)),CaHz0:=(Enable:=FALSE,UmOn:=0.5,Ref:=1.0,RefMax:=1.2,RefMin:=0.9,dRefOn:=0.01,dRefOff:=0.1,Kdp:=0.0,PosMax:=0.95,PID:=(Kp:=0.002,Ti:=0.2,Td:=0.5,Tf:=1.0,Kwd:=1.0)),CaHz1:=(Enable:=FALSE,UmOn:=0.5,Ref:=1.025,RefMax:=1.2,RefMin:=0.9,dRefOn:=0.01,dRefOff:=0.01,Kdp:=0.1,PosMax:=0.95,PID:=(Kp:=0.003,Ti:=0.15,Td:=0.0,Tf:=1.0,Kwd:=1.0)),CaPwr:=(Enable:=FALSE,UmOn:=0.5,Ref:=0.02,RefMax:=1.05,RefMin:=0.0,dRefOn:=0.01,dRefOff:=0.01,PID:=(Kp:=0.001,Ti:=0.8,Td:=0.0,Tf:=1.0,Kwd:=1.0),L2max:=1.1,L2min:=0.9,Kdp:=0.1,PosMax:=0.8,PIDHz:=(Kp:=0.002,Ti:=0.2,Td:=0.5,Tf:=1.0,Kwd:=1.0)))),CtrlOnline:=PGS_GOV_CA_PWR);
+	pos1 : PgsPOS := (Parameter:=(Enable:=FALSE,Base:=100,RampUp:=(dSp0:=0.1,SetPoint:=0.2,dSp1:=0.3),RampDown:=(dSp0:=0.05,SetPoint:=0.15,dSp1:=0.2),HCC:=(Kup:=1.0,Kdown:=1.0,dbHigh:=0.55,dbLow:=0.45),PID:=(Kp:=0.05,Ti:=5.0,Td:=0.0,Tf:=1.0,Kwd:=1.0,Update:=TRUE)));
+	pos2 : PgsPOS := (Parameter:=(Enable:=FALSE,Base:=100,RampUp:=(dSp0:=0.1,SetPoint:=0.2,dSp1:=0.3),RampDown:=(dSp0:=0.05,SetPoint:=0.15,dSp1:=0.2),HCC:=(Kup:=1.0,Kdown:=1.0,dbHigh:=0.55,dbLow:=0.45),PID:=(Kp:=0.05,Ti:=5.0,Td:=0.0,Tf:=1.0,Kwd:=1.0,Update:=TRUE)));
+	pos3 : PgsPOS := (Parameter:=(Enable:=FALSE,Base:=100,RampUp:=(dSp0:=0.1,SetPoint:=0.2,dSp1:=0.3),RampDown:=(dSp0:=0.05,SetPoint:=0.15,dSp1:=0.2),HCC:=(Kup:=1.0,Kdown:=1.0,dbHigh:=0.55,dbLow:=0.45),PID:=(Kp:=0.05,Ti:=5.0,Td:=0.0,Tf:=1.0,Kwd:=1.0,Update:=TRUE)));
+	curve1 : PgsCurve := (Curve:=(in:=[0.0,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],out:=[0.0,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]));
+	curve2 : PgsCurve := (Curve:=(in:=[0.0,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],out:=[0.0,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]));
+	curve3 : PgsCurve := (Curve:=(in:=[0.0,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],out:=[0.0,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]));
+END_VAR
+(*Protection*)
+VAR
+	phaseFault : PgsProtPhaseFault;
+END_VAR
+(*Meter*)
+VAR
+	meter : PgsMeter := (Base:=(Sm:=1000,Um:=380,Fm:=60,Rot:=2000,Uf:=80,If:=10));
+	filter_uf : LCRMovAvgFlt;
+	pos1_input : REAL;
+	pos2_input : REAL;
+	pos3_input : REAL;
+	uf_input : REAL;
+	if_input : REAL;
+END_VAR
+(*Hour Meter*)
+VAR
+	hour_running : PgsHorimetro;
+	hour_online : PgsHorimetro;
+END_VAR
+(*Energy Meter*)
+VAR
+	energia_ativa : PgsEnergia;
+	energia_reativa : PgsEnergia;
+	energy_active : PgsEnergy;
+	energy_reactive : PgsEnergy;
+END_VAR

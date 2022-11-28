@@ -1,0 +1,10 @@
+VAR
+	CmdClose : PgsEvtCmdClose;
+	CmdOpen : PgsEvtCmdOpen;
+	group : STRING[80];
+	step : USINT;
+	tag : STRING[80];
+	add : BOOL;
+	remove : BOOL;
+	clear : BOOL;
+END_VAR

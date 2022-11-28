@@ -1,0 +1,7 @@
+VAR
+	MDB_Parametros : ARRAY[1..256] OF REAL;
+	MDB_Medidas : ARRAY[1..256] OF REAL;
+	MDB_Status : ARRAY[1..256] OF BOOL;
+	MDB_Comandos : ARRAY[1..256] OF BOOL;
+	MDB_Alarmes : ARRAY[1..256] OF BOOL;
+END_VAR

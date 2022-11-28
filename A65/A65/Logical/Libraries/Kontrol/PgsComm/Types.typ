@@ -1,0 +1,20 @@
+
+TYPE
+	PgsMbStatus : 
+		(
+		PGS_MB_ST_OK, (*No Error*)
+		PGS_MB_ST_RUNNING,
+		PGS_MB_ST_DISABLED,
+		PGS_MB_ST_INVALID_IDENT,
+		PGS_MB_ST_OPENING,
+		PGS_MB_ST_CLOSING,
+		PGS_MB_ST_CLOSED (*Device not open*)
+		);
+	PgsMbBlkType : 
+		(
+		PGS_MB_BLK_DISCRETE,
+		PGS_MB_BLK_COIL,
+		PGS_MB_BLK_HOLDING,
+		PGS_MB_BLK_INPUT
+		);
+END_TYPE

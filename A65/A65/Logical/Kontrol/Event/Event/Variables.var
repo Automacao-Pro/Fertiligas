@@ -1,0 +1,6 @@
+VAR
+	EventCreate : PgsEvtCreate;
+	EventDelete : PgsEvtDelete;
+	EventUpdate : PgsEvtUpdate;
+	test : REAL;
+END_VAR

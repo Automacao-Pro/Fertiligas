@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio FileVersion="4.9"?>
+<Package xmlns="http://br-automation.co.at/AS/Package">
+  <Objects>
+    <Object Type="Library" Language="IEC">PgsAuto</Object>
+    <Object Type="Library" Language="Binary">Pgs0985</Object>
+    <Object Type="Library" Language="Binary">PgsAI4622</Object>
+    <Object Type="Library" Language="Binary">PgsAO4622</Object>
+    <Object Type="Library" Language="Binary">PgsCfgNet</Object>
+    <Object Type="Library" Language="Binary">PgsComm</Object>
+    <Object Type="Library" Language="Binary">PgsControl</Object>
+    <Object Type="Library" Language="Binary">PgsEvent</Object>
+    <Object Type="Library" Language="Binary">PgsFileSys</Object>
+    <Object Type="Library" Language="Binary">PgsProt</Object>
+    <Object Type="Library" Language="Binary">PgsTag</Object>
+    <Object Type="Library" Language="Binary">PgsTagLink</Object>
+    <Object Type="Library" Language="Binary">PgsTelnet</Object>
+  </Objects>
+</Package>

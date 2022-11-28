@@ -1,0 +1,14 @@
+(*********************************************************************************
+ * Copyright: Microsoft
+ * Author:    sandrionir
+ * Created:   February 21, 2017/7:19 AM 
+ *********************************************************************************
+ * Global variables of project
+ *********************************************************************************)
+VAR CONSTANT
+	version : PgsVersionType := (X:=2,Y:=2,Z:=0);
+END_VAR
+(*Hardware*)
+VAR
+	HW : PgsHW;
+END_VAR
