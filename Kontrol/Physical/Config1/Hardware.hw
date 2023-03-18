@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio Version=4.10.2.37 FileVersion="4.9"?>
+<Hardware xmlns="http://br-automation.co.at/AS/Hardware">
+  <Module Name="A65" Type="X20CP1382" Version="1.8.0.0">
+    <Module Name="X1" Type="X1" Virtual="true" Version="1.8.0.0">
+      <Connection Connector="SS1" TargetModule="X20TB1F" TargetConnector="SS" />
+      <Connection Connector="SL" TargetModule="A65" TargetConnector="X1" />
+    <Parameter ID="X1AI_ChannelType01" Value="PT1000" />
+    <Parameter ID="X1AI_ChannelType02" Value="4 to 20mA" />
+    <Parameter ID="X1AI2_LowerLimit_420mA" Value="-8192" />
+  </Module>
+    <Module Name="X2" Type="X2" Virtual="true" Version="1.8.0.0">
+      <Connection Connector="SS1" TargetModule="X20TB1F1" TargetConnector="SS" />
+      <Connection Connector="SL" TargetModule="A65" TargetConnector="X2" />
+    <Parameter ID="X2CounterFunction" Value="Edge" />
+    <Parameter ID="X2CounterTimeInfo" Value="32Bit" />
+  </Module>
+    <Module Name="X3" Type="X3" Virtual="true" Version="1.8.0.0">
+      <Connection Connector="SS1" TargetModule="X20TB1F2" TargetConnector="SS" />
+      <Connection Connector="SL" TargetModule="A65" TargetConnector="X3" />
+    </Module>
+    <Connection Connector="X1" TargetModule="X1" TargetConnector="SL" />
+    <Connection Connector="X2" TargetModule="X2" TargetConnector="SL" />
+    <Connection Connector="X3" TargetModule="X3" TargetConnector="SL" />
+    <Connector Name="IF2">
+      <Parameter ID="ActivateDevice" Value="1" />
+      <Parameter ID="HostName" Value="kontrol" />
+      <Parameter ID="Mode" Value="Manual" />
+      <Parameter ID="InternetAddress" Value="10.201.3.9" />
+      <Parameter ID="SubnetMask" Value="255.255.255.192" />
+      <Parameter ID="InaNodeNumber" Value="6" />
+      <Group ID="Vnc1" />
+      <Parameter ID="VncKeyMappingFile1" Value="" />
+      <Parameter ID="VncRefreshRate1" Value="250" />
+      <Parameter ID="ActivateSnmp" Value="2" />
+      <Parameter ID="ActivateModbus" Value="1" />
+      <Parameter ID="NumSlaves" Value="-1" />
+      <Parameter ID="NumAllBlocks" Value="-1" />
+      <Parameter ID="MemSizeIn" Value="-1" />
+      <Parameter ID="MemSizeOut" Value="-1" />
+    </Connector>
+    <Connector Name="IF3">
+      <Parameter ID="CycleTime" Value="2000" />
+      <Parameter ID="EPL_LossFrameTolerance_Selector" Value="2" />
+      <Parameter ID="EPL_LossFrameTolerance" Value="5" />
+      <Parameter ID="ActivateIna" Value="1" />
+      <Parameter ID="InaNodeNumber" Value="1" />
+    </Connector>
+    <Parameter ID="ConfigurationID" Value="A65" />
+    <Parameter ID="RemanentGlobalPvSize" Value="10940" />
+    <Parameter ID="EnableUsbRemoteInstall" Value="1" />
+    <Parameter ID="EnableCfRemoteInstall" Value="1" />
+    <Parameter ID="SystemTick" Value="1000" />
+    <Parameter ID="IdleTaskClass" Value="8" />
+    <Parameter ID="TaskClassIdleTime" Value="4000" />
+    <Parameter ID="Cyclic1Duration" Value="2000" />
+    <Parameter ID="Cyclic1Tolerance" Value="2000" />
+    <Parameter ID="Cyclic2Duration" Value="10000" />
+    <Parameter ID="Cyclic2Tolerance" Value="10000" />
+    <Parameter ID="Cyclic3Duration" Value="100000" />
+    <Parameter ID="Cyclic3Tolerance" Value="100000" />
+    <Parameter ID="Cyclic4Duration" Value="200000" />
+    <Parameter ID="Cyclic4Tolerance" Value="200000" />
+    <Parameter ID="Cyclic5Duration" Value="500000" />
+    <Parameter ID="Cyclic5Tolerance" Value="500000" />
+    <Parameter ID="Cyclic6Duration" Value="100000" />
+    <Parameter ID="Cyclic6Tolerance" Value="3000000" />
+    <Parameter ID="Cyclic7Duration" Value="20000" />
+    <Parameter ID="Cyclic7Tolerance" Value="10000000" />
+    <Parameter ID="Cyclic8Duration" Value="50000" />
+    <Parameter ID="Cyclic8Tolerance" Value="10000000" />
+    <Group ID="FileDevice1" />
+    <Parameter ID="FileDeviceName1" Value="" />
+    <Parameter ID="FileDevicePath1" Value="" />
+    <Parameter ID="TimeZone" Value="105" />
+    <Parameter ID="ActivateSntp" Value="1" />
+    <Parameter ID="SntpcServAddr1" Value="a.st1.ntp.br" />
+    <Parameter ID="SntpcServAddr2" Value="b.st1.ntp.br" />
+    <Parameter ID="SntpcServAddr3" Value="c.st1.ntp.br" />
+    <Parameter ID="SntpcServAddr4" Value="d.st1.ntp.br" />
+    <Parameter ID="EthernetHostName" Value="kontrol" />
+    <Parameter ID="EthernetDefaultGateway" Value="10.201.3.62" />
+    <Group ID="FtpUser1" />
+    <Parameter ID="FtpUsername1" Value="progressul" />
+    <Parameter ID="FtpUserPassword1" Value="vk2iY3J4UkERtYbEJrmZIzULlFJLyE0YoKo7iPp2s1I=" />
+    <Parameter ID="FtpUserSalt1" Value="6vig95Eg" />
+    <Parameter ID="FTPAccessRight1" Value="0" />
+    <Parameter ID="FTPMSPartition1" Value="SYSTEM" />
+    <Parameter ID="FTPMSpath1" Value="" />
+    <Parameter ID="ActivateOpcUa" Value="1" />
+    <Parameter ID="OpcUaInformationModels_PV_Version" Value="1" />
+  </Module>
+  <Module Name="A_1" Type="X20CM0985-02" Version="1.3.0.0">
+    <Connection Connector="X2X1" TargetModule="A65" TargetConnector="IF6" />
+    <Parameter ID="Supervision" Value="off" />
+    <Parameter ID="ReadBack" Value="on" />
+    <Parameter ID="FuncDO5" Value="NetErrorUser" />
+    <Parameter ID="Timestamps" Value="on" />
+    <Parameter ID="GenErrorReset" Value="on" />
+    <Parameter ID="GenErrorCheck" Value="phaseline" />
+    <Parameter ID="NetConfig" Value="3Phase" />
+    <Parameter ID="SyncConfig" Value="X4X3" />
+  </Module>
+  <Module Name="A_2" Type="X20AI4622" Version="1.0.5.0">
+    <Connection Connector="SS1" TargetModule="X20TB12e" TargetConnector="SS" />
+    <Connection Connector="SL" TargetModule="X20BM11e" TargetConnector="SL1" />
+    <Parameter ID="Supervision" Value="off" />
+    <Parameter ID="ChannelType01" Value="4 to 20mA" />
+    <Parameter ID="ChannelType02" Value="4 to 20mA" />
+    <Parameter ID="ChannelType03" Value="4 to 20mA" />
+    <Parameter ID="ChannelType04" Value="4 to 20mA" />
+  </Module>
+  <Module Name="A_3" Type="X20AO4622" Version="1.3.0.0">
+    <Connection Connector="SS1" TargetModule="X20TB12j" TargetConnector="SS" />
+    <Connection Connector="SL" TargetModule="X20BM11i" TargetConnector="SL1" />
+    <Parameter ID="Supervision" Value="off" />
+    <Parameter ID="ChannelType01" Value="0 to 20mA" />
+    <Parameter ID="ChannelType02" Value="4 to 20mA" />
+    <Parameter ID="ChannelType03" Value="4 to 20mA" />
+    <Parameter ID="ChannelType04" Value="4 to 20mA" />
+  </Module>
+  <Module Name="X20BM11e" Type="X20BM11" Version="1.0.0.1">
+    <Connection Connector="X2X1" TargetModule="A_1" TargetConnector="X2X2" />
+  </Module>
+  <Module Name="X20BM11i" Type="X20BM11" Version="1.0.0.1">
+    <Connection Connector="X2X1" TargetModule="X20BM11e" TargetConnector="X2X2" />
+  </Module>
+  <Module Name="X20TB12e" Type="X20TB12" Version="1.0.0.0" />
+  <Module Name="X20TB12j" Type="X20TB12" Version="1.0.0.0" />
+  <Module Name="X20TB1F" Type="X20TB1F" Version="1.0.0.0" />
+  <Module Name="X20TB1F1" Type="X20TB1F" Version="1.0.0.0" />
+  <Module Name="X20TB1F2" Type="X20TB1F" Version="1.0.0.0" />
+</Hardware>

@@ -1,0 +1,22 @@
+
+
+PROGRAM _INIT
+    
+    //Events
+//    EvtGroup.enable     := TRUE;
+//    EvtGroup.group      := ADR('Protection');
+//    EvtGroup.pData      := ADR(EvtMemory);
+//    EvtGroup.dataSize   := SIZEOF(EvtMemory);
+	
+	(*
+	// Config Digital Inputs
+	di_CrowbarOk		ACCESS ADR( A65.X2.DI10 );
+	di_TemperatureOk	ACCESS ADR( A65.X2.DI14 );
+	
+	// Config Digital Outputs
+	do_T86E				ACCESS ADR( A65.M1.out.DO05 );
+	do_T86H				ACCESS ADR( A65.M1.out.DO06 );
+	do_50BF				ACCESS ADR( A65.X3.DO12 );
+	*)
+	 
+END_PROGRAM

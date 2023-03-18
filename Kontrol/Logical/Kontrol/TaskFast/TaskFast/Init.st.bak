@@ -1,0 +1,25 @@
+
+
+PROGRAM _INIT
+
+    TagManager(enable:=TRUE);
+    
+    PgsTagStartNode(TagManager.ident, ADR('test'));
+    PgsTagRegisterBOOL(TagManager.ident, FALSE, ADR('fast'), fast);  
+    PgsTagEndNode(TagManager.ident);
+
+    //Events
+//    EvtGroup.enable     := TRUE;
+//    EvtGroup.group      := ADR('Hardware');
+//    EvtGroup.pData      := ADR(EvtMemory);
+//    EvtGroup.dataSize   := SIZEOF(EvtMemory);
+    
+    //Filters 
+    uf_filter.enable    := TRUE;
+    uf_filter.base      := 32;
+
+    if_filter.enable    := TRUE;
+    if_filter.base      := 32;
+
+
+END_PROGRAM

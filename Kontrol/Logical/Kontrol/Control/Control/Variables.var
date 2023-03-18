@@ -1,0 +1,30 @@
+(*PWR*)
+VAR
+	pwr_tp : TP;
+	pwr_ton : TON;
+	pwr_mem : BOOL;
+	filter_pwr : PgsFiltro := (CTE:=100);
+END_VAR
+(*RPM*)
+VAR
+	rpm1 : PgsRPM;
+	rpm2 : PgsRPM;
+	filter_rpm1 : PgsFiltro;
+	filter_rpm2 : PgsFiltro;
+END_VAR
+(*Analog Inputs*)
+VAR
+	scale_if : LCRScal;
+	scale_uf : LCRScal;
+	scale_pos1 : LCRScal;
+	scale_pos2 : LCRScal;
+	scale_pos3 : LCRScal;
+	filter_pos1 : PgsFiltro := (CTE:=20);
+END_VAR
+(*Analog Outputs*)
+VAR
+	scale_avr_o1 : LCRScal;
+	scale_gov_o1 : LCRScal;
+	scale_gov_o2 : LCRScal;
+	scale_gov_o3 : LCRScal;
+END_VAR

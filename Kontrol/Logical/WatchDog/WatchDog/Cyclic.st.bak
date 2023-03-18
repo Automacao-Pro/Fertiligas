@@ -1,0 +1,33 @@
+
+PROGRAM _CYCLIC   
+    License();
+    ProtFlag.KeyInvalid			:= NOT License.Valid;
+    ProtFlag.PwrSrcCpuIOFault	:= HW.Modulos.FALHA_FONTE_IO;
+    ProtFlag.PwrSrcM1IOFault	:= cm0985IO.di.PS24VFault;
+	
+    IF  License.Valid
+    AND	NOT ProtFlag.PwrSrcCpuIOFault	// Power Source CPU I/O Fault
+    AND	NOT ProtFlag.PwrSrcM1IOFault	// Power Source Energy Module I/O Fault
+    AND	HW.Modulos.A1_1_OK
+    AND	HW.Modulos.A1_2_OK
+	AND	HW.Modulos.A1_3_OK
+//	AND	HW.Modulos.A1_4_OK
+//	AND	HW.Modulos.A1_5_OK
+//	AND	HW.Modulos.A1_6_OK
+//	AND	HW.Modulos.A1_7_OK
+//	AND	HW.Modulos.A1_8_OK
+//	AND	HW.Modulos.A1_9_OK
+//	AND	HW.Modulos.A1_10_OK
+//	AND	HW.Modulos.A1_11_OK
+//	AND	HW.Modulos.A1_12_OK
+	THEN
+        WDOK    := TRUE;
+    ELSE
+        WDOK    := FALSE;   
+    END_IF
+    
+    //WatchDog
+    ProtFlag.WatchDog	:= NOT WDOK;
+	//Saídas Trip Interno
+	HW.SD.WATCHDOG  := WDOK;   	 
+END_PROGRAM

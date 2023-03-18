@@ -1,0 +1,402 @@
+
+PROGRAM _CYCLIC
+
+    IF NOT PgsTagValid(TagManager.ident) THEN 
+        RETURN;
+    END_IF
+
+	cm0985Meter();
+ 
+    phaseFault(
+        Enable  := TRUE,
+        Ph1     := cm0985Meter.Ug1,
+        Ph2     := cm0985Meter.Ug2,
+        Ph3     := cm0985Meter.Ug3
+    );   
+    
+ (******************************************************
+****************** Circuit Breaker  ********************
+*******************************************************)
+    avr.DigInputs.Online := CB52.st.closed;
+    gov.DigInputs.Online := CB52.st.closed;
+ 	
+(******************************************************)   
+    //Reset
+    IF A65.di.reset THEN
+        //A65.di.reset        := FALSE;
+        avr.DigInputs.Reset := TRUE;
+		gov.DigInputs.Reset := TRUE;
+		//Reset to Auto Mode
+		//gov.DigInputs.Auto  := TRUE;
+		//avr.DigInputs.Auto  := TRUE;
+    END_IF;
+    
+    IF NOT A65.di.remote THEN
+        //GOV
+        gov.DigInputs.Start     := A65.di.gov_enable;
+        gov.DigInputs.Stop      := NOT A65.di.gov_enable;
+        gov.DigInputs.Unload    := A65.di.gov_unload;
+        IF A65.di.gov_ctrl_pwr_enable THEN
+            gov.CtrlOnline  := PGS_GOV_CA_PWR;
+        ELSE
+            gov.CtrlOnline  := PGS_GOV_CA_HZ_1;
+        END_IF;
+        
+        //AVR
+        avr.DigInputs.Start     := A65.di.avr_enable;
+        avr.DigInputs.Stop      := NOT A65.di.avr_enable;
+        avr.DigInputs.Unload    := A65.di.avr_unload;
+        IF A65.di.avr_ctrl_qm_enable    THEN
+            avr.CtrlOnline  := PGS_AVR_CA_QM;
+        ELSIF  A65.di.avr_ctrl_pf_enable THEN
+            avr.CtrlOnline  := PGS_AVR_CA_PF;
+        ELSE
+            avr.CtrlOnline  := PGS_AVR_CA_UM_1;
+        END_IF;
+		
+    END_IF;
+    
+    (******************************************************)
+     
+	//TRIP
+	IF A65.di.avr_trip THEN
+        avr.DigInputs.Stop := TRUE;
+    END_IF;
+    IF A65.di.gov_trip THEN
+        gov.DigInputs.Stop := TRUE;
+    END_IF;
+            
+	//Meters
+	
+    //Icc ==> fix 4-20mA
+    scale_if.x1 := 4.0;
+    scale_if.x2 := 20.0;
+    if_input	:= IfAvg * 16.0 / 32767.0 + 4.0;
+    
+    scale_if( 
+        x   := if_input,
+        y1  := SysPar.Gen.IfMin,
+        y2  := SysPar.Gen.IfMax
+    );
+	meter.In.If := scale_if.y;
+	//Vcc
+    scale_uf.x1 := 4.0;
+	scale_uf.x2 := 20.0;
+
+	 //Vcc ==> fix 4-20mA
+	uf_input	:= UfAvg * 16.0 / 32767.0 + 4.0;
+    scale_uf( 
+        x   := uf_input,
+        y1  := SysPar.Gen.UfMin,
+        y2  := SysPar.Gen.UfMax 
+    );
+	meter.In.Uf := scale_uf.y;
+	
+	filter_uf( x := meter.In.Uf );
+    //Ub
+    IF cm0985Main.Enable3phase THEN
+        meter.In.Ub := (cm0985Meter.Un12 + cm0985Meter.Un23 + cm0985Meter.Un31) / 3;
+    ELSE
+        meter.In.Ub := cm0985Meter.Un12;
+    END_IF;
+	//Um
+	IF NOT phaseFault.Fault1 AND NOT phaseFault.Fault2 AND NOT phaseFault.Fault3 THEN
+        meter.In.Um 	:=  cm0985Meter.Ug;
+    ELSIF phaseFault.Fault1 AND NOT phaseFault.Fault2 AND NOT phaseFault.Fault3 THEN
+        meter.In.Um 	:=  cm0985Meter.Ug23;
+    ELSIF NOT phaseFault.Fault1 AND phaseFault.Fault2 AND NOT phaseFault.Fault3 THEN
+        meter.In.Um 	:=  cm0985Meter.Ug31;
+    ELSIF NOT phaseFault.Fault1 AND NOT phaseFault.Fault2 AND phaseFault.Fault3 THEN
+        meter.In.Um 	:=  cm0985Meter.Ug12;
+    ELSE
+        meter.In.Um     :=  phaseFault.Phm * SQRT(3);
+    END_IF
+
+	meter.In.Im		:= cm0985Meter.Ig;
+	IF meter.In.Um < 5 THEN
+		meter.In.Fm		:= 0.0;
+		meter.In.PF		:= 1.0;
+	ELSE
+		meter.In.Fm		:= cm0985Meter.Fg;
+		meter.In.PF		:= cm0985Meter.PFg;
+	END_IF;
+	meter.In.Pm		:= cm0985Meter.Pg;
+	meter.In.Qm		:= cm0985Meter.Qg;
+	meter.In.Sm		:= cm0985Meter.Sg;
+	
+    rpm1(ppr := REAL_TO_INT(SysPar.Gen.PPR1));
+    filter_rpm1.IN := rpm1.Output;
+	filter_rpm1();
+    
+    rpm2(ppr := REAL_TO_INT(SysPar.Gen.PPR2));
+    filter_rpm2.IN := rpm2.Output;
+    filter_rpm2();
+    
+	IF filter_rpm1.OUT > filter_rpm2.OUT THEN
+	    meter.In.Rot := filter_rpm1.OUT;
+    ELSE
+	    meter.In.Rot := filter_rpm2.OUT;
+    END_IF;
+  //  A65.do.rpm_fault := ( ABS(filter_rpm2.y - filter_rpm1.y) / meter.Base.Rot ) > 0.05;
+    
+	meter       ();
+    
+	//Position
+//    CASE ai4622.Channel1 OF
+//        PGS_AI4622_B10_V:
+//            pos1_input	    := INT_TO_REAL(A65.ai.pos1) * 10.0 / 32767.5;
+//        PGS_AI4622_0_20_mA:
+//            pos1_input	    := INT_TO_REAL(A65.ai.pos1) * 20.0 / 32767.0;
+//        PGS_AI4622_4_20_mA:
+//            pos1_input	    := INT_TO_REAL(A65.ai.pos1) * 16.0 / 32767.0 + 4.0;
+//    END_CASE;
+    //pos1 - ==> fix 4-20mA
+	pos1_input	    := INT_TO_REAL(A65.ai.pos1) * 16.0 / 32767.0 + 4.0;
+    scale_pos1( 
+        x   := pos1_input,
+		x1  := SysPar.Gen.Pos1_0p,
+        x2  := SysPar.Gen.Pos1_100p 
+    );
+	pos1.PosIn	:= scale_pos1.y;
+	
+    CASE ai4622.Channel2 OF
+        PGS_AI4622_B10_V:
+            pos2_input	    := INT_TO_REAL(A65.ai.pos2) * 10.0 / 32767.5;
+        PGS_AI4622_0_20_mA:
+            pos2_input	    := INT_TO_REAL(A65.ai.pos2) * 20.0 / 32767.0;
+        PGS_AI4622_4_20_mA:
+            pos2_input	    := INT_TO_REAL(A65.ai.pos2) * 16.0 / 32767.0 + 4.0;
+    END_CASE;
+    scale_pos2( 
+        x   := pos2_input,
+		x1  := SysPar.Gen.Pos2_0p,
+		x2  := SysPar.Gen.Pos2_100p 
+	);
+	pos2.PosIn	:= scale_pos2.y;
+	
+    CASE ai4622.Channel3 OF
+        PGS_AI4622_B10_V:
+            pos3_input	    := INT_TO_REAL(A65.ai.pos3) * 10.0 / 32767.5;
+        PGS_AI4622_0_20_mA:
+            pos3_input	    := INT_TO_REAL(A65.ai.pos3) * 20.0 / 32767.0;
+        PGS_AI4622_4_20_mA:
+            pos3_input	    := INT_TO_REAL(A65.ai.pos3) * 16.0 / 32767.0 + 4.0;
+    END_CASE;
+    scale_pos3( 
+        x   := pos3_input,
+		x1  := SysPar.Gen.Pos3_0p,
+		x2  := SysPar.Gen.Pos3_100p 
+	);
+    pos3.PosIn := scale_pos3.y;
+    
+	//Syncronizer
+    IF A65.di.remote THEN
+        cm0985IO.do.SyncSlip    := SysUpdate.EnableSync;
+        cm0985IO.do.SyncDeadBus := SysUpdate.EnableDeadBus AND NOT SysUpdate.EnableSync;
+    ELSE    
+        cm0985IO.do.SyncSlip    := A65.di.sync_enable AND NOT CB52.st.closed;
+        cm0985IO.do.SyncDeadBus := A65.di.dead_bus_enable AND NOT CB52.st.closed AND NOT A65.di.sync_enable;
+    END_IF;
+	A65.do.sync_enabled     := cm0985IO.do.SyncSlip OR cm0985IO.do.SyncDeadBus;
+    IF cm0985IO.do.SyncSlip THEN
+		IF cm0985Meter.dAngle > 15 AND cm0985Meter.dAngle < 345 THEN
+			gov.SetPoints.fastSetHz := (cm0985Meter.Fs1 / meter.Base.Fm) * 1.001;
+		ELSE
+			gov.SetPoints.fastSetHz := cm0985Meter.Fs1 / meter.Base.Fm;
+		END_IF;
+		avr.SetPoints.fastSetUm := meter.Out.Ub;
+	END_IF;
+
+//=======================================================================
+//=====	Para maior estabilidade do controle de potência	=================
+//=======================================================================
+	// Filtro da leitura da potência para estabilizar o sinal
+	IF meter.Out.Pm <> 0 THEN
+		filter_pwr(IN:=meter.Out.Pm);
+	ELSE
+		filter_pwr(IN:=0.0001);
+	END_IF;
+	// Verifica se a diferença em módulo da potência é menor que 1.5%
+	IF  ABS(filter_pwr.OUT - gov.SetPoints.fastSetPwr) < gov.Parameter.CtrlAuto.CaPwr.Kdp
+		// Verifica se a diferença em módulo do controle é menor que 2%
+	AND ABS(1 - gov.SetPoints.fastSetHz) < 0.02	THEN
+		// Se a deadband do PID for diferente, aplica deadband
+		IF gov.Parameter.CtrlAuto.CaPwr.PID.db <> gov.Parameter.CtrlAuto.CaPwr.Kdp THEN
+			gov.Parameter.CtrlAuto.CaPwr.PID.Update		:= TRUE;
+			gov.Parameter.CtrlAuto.CaPwr.PIDHz.Update	:= TRUE;
+		END_IF;
+		gov.Parameter.CtrlAuto.CaPwr.PID.db		:= gov.Parameter.CtrlAuto.CaPwr.Kdp;
+		gov.Parameter.CtrlAuto.CaPwr.PIDHz.db	:= gov.Parameter.CtrlAuto.CaPwr.Kdp;
+	ELSE
+		// Se a deadband do PID for diferente, desaplica deadband
+		IF gov.Parameter.CtrlAuto.CaPwr.PID.db <> 0.00 THEN
+			gov.Parameter.CtrlAuto.CaPwr.PID.Update	:= TRUE;
+			gov.Parameter.CtrlAuto.CaPwr.PIDHz.Update	:= TRUE;
+		END_IF;
+		gov.Parameter.CtrlAuto.CaPwr.PID.db		:= 0.00;
+		gov.Parameter.CtrlAuto.CaPwr.PIDHz.db	:= 0.00;
+	END_IF;
+
+	
+	pwr_tp(IN:= CB52.st.closed, PT:=T#2s);
+	IF pwr_tp.Q THEN
+		gov.SetPoints.fastSetPwr := 0.1;
+	END_IF;
+	pwr_ton(IN:= CB52.st.closed AND NOT pwr_mem, PT:= T#5s);
+	IF pwr_ton.Q THEN
+		pwr_mem := TRUE;
+		gov.SetPoints.SetPwr := gov.Parameter.CtrlAuto.CaPwr.Ref;
+	END_IF;
+	IF NOT CB52.st.closed THEN
+		pwr_mem := FALSE;
+	END_IF;
+//=======================================================================
+//=======================================================================
+	
+	//GOV
+	gov     ();
+	
+	//POS1
+    curve1	( In := gov.Out);
+    pos1	( In := curve1.Out, Enable := (gov.DigOutputs.Status.Enable AND NOT A65.di.gov_trip) OR  pos1.Mode <> PGS_POS_MD_AUTO );
+    //Out2
+    IF A65.di.gov_trip THEN 
+        o2 := 0.0;
+    ELSE
+        o2 := pos1.Out * 100.0;
+    END_IF;
+//    IF ao4622.Channel1 = PGS_AO4622_B10_V THEN
+//        scale_o2.y1 := -32768;
+//    ELSE
+//        scale_o2.y1 := 0;
+//    END_IF;
+	scale_o2.y1 := 0;
+    scale_o2.y2 := 32767.0;
+    IF SysIOPar.AO2max > SysIOPar.AO2min THEN
+        IF o2 > SysIOPar.AO2max THEN o2 := SysIOPar.AO2max; END_IF;
+        IF o2 < SysIOPar.AO2min THEN o2 := SysIOPar.AO2min; END_IF;
+        scale_o2( x := o2, x1 :=  0.0, x2 := 100.0);
+    ELSE
+        IF o2 < SysIOPar.AO2max THEN o2 := SysIOPar.AO2max; END_IF;
+        IF o2 > SysIOPar.AO2min THEN o2 := SysIOPar.AO2min; END_IF;
+        scale_o2( x := o2, x1 :=  100.0, x2 := 0.0);
+    END_IF;
+    A65.ao.pos1 := REAL_TO_INT(scale_o2.y);
+
+    //POS2
+    curve2	( In := gov.Out );
+    pos2	( In := curve2.Out, Enable := (gov.DigOutputs.Status.Enable AND NOT A65.di.gov_trip) OR  pos2.Mode <> PGS_POS_MD_AUTO );
+    //Out3
+    IF A65.di.gov_trip THEN 
+        o3 := 0.0;
+    ELSE
+        o3 := pos2.invOut * 100.0;
+    END_IF;
+    IF ao4622.Channel3 = PGS_AO4622_B10_V THEN
+        scale_o3.y1 := -32768;
+    ELSE
+        scale_o3.y1 := 0;
+    END_IF;
+    scale_o3.y2 := 32767.0;
+    IF SysIOPar.AO3max > SysIOPar.AO3min THEN
+        IF o3 > SysIOPar.AO3max THEN o3 := SysIOPar.AO3max; END_IF;
+        IF o3 < SysIOPar.AO3min THEN o3 := SysIOPar.AO3min; END_IF;
+        scale_o3( x := o3, x1 :=  0.0, x2 := 100.0);
+    ELSE
+        IF o3 < SysIOPar.AO3max THEN o3 := SysIOPar.AO3max; END_IF;
+        IF o3 > SysIOPar.AO3min THEN o3 := SysIOPar.AO3min; END_IF;
+        scale_o3( x := o3, x1 :=  100.0, x2 := 0.0);
+    END_IF;
+    A65.ao.pos2 := REAL_TO_INT(scale_o3.y);
+
+    //POS3
+    curve3	( In := gov.Out );
+    pos3	( In := curve3.Out, Enable := (gov.DigOutputs.Status.Enable AND NOT A65.di.gov_trip) OR  pos3.Mode <> PGS_POS_MD_AUTO );
+    //Out4
+    IF A65.di.gov_trip THEN 
+        o4 := 0.0;
+    ELSE
+        o4 := pos3.Out * 100.0;
+    END_IF;
+    IF ao4622.Channel4 = PGS_AO4622_B10_V THEN
+        scale_o4.y1 := -32768;
+    ELSE
+        scale_o4.y1 := 0;
+    END_IF;
+    scale_o4.y2 := 32767.0;
+    IF SysIOPar.AO4max > SysIOPar.AO4min THEN
+        IF o4 > SysIOPar.AO4max THEN o4 := SysIOPar.AO4max; END_IF;
+        IF o4 < SysIOPar.AO4min THEN o4 := SysIOPar.AO4min; END_IF;
+        scale_o4( x := o4, x1 :=  0.0, x2 := 100.0);
+    ELSE
+        IF o4 < SysIOPar.AO4max THEN o4 := SysIOPar.AO4max; END_IF;
+        IF o4 > SysIOPar.AO4min THEN o4 := SysIOPar.AO4min; END_IF;
+        scale_o4( x := o4, x1 :=  100.0, x2 := 0.0);
+    END_IF;
+    A65.ao.pos3 := REAL_TO_INT(scale_o4.y);
+        
+    //Gov Pos feedback
+    gov.PosIn   := pos1.PosOut;
+	
+    //Digital Outputs
+ 	rpm_tof(IN:= meter.Out.Rot >= 0.00666, PT:=T#10s);
+	
+    A65.do.gov_on               := gov.DigOutputs.Status.Enable;
+    A65.do.rotation_zero        := NOT rpm_tof.Q; //gov.DigOutputs.Status.Stopped;
+    A65.do.rotation_nominal     := gov.DigOutputs.Status.RotationOk;
+    A65.do.rotation_brake       := gov.DigOutputs.Status.RotationBrake; //meter.Out.Rot < gov.Parameter.CtrlAuto.SoftStart.RpmBrake;
+    A65.do.gov_unload           := gov.DigOutputs.Status.Unloaded;
+    A65.do.gov_over_rotation    := gov.DigOutputs.Trip.OverRotation;
+    A65.do.power_zero           := meter.Out.Pm < 0.005;
+    	
+	//AVR
+    avr			();
+    //Out1
+    o1 := avr.Out * 100.0;
+    IF ao4622.Channel2 = PGS_AO4622_B10_V THEN
+        scale_o1.y1 := -32768;
+    ELSE
+        scale_o1.y1 := 0;
+    END_IF;
+    scale_o1.y2 := 32767.0;
+    IF SysIOPar.AO1max > SysIOPar.AO1min THEN
+        IF o1 > SysIOPar.AO1max THEN o1 := SysIOPar.AO1max; END_IF;
+        IF o1 < SysIOPar.AO1min THEN o1 := SysIOPar.AO1min; END_IF;
+        scale_o1( x := o1, x1 :=  0.0, x2 := 100.0);
+    ELSE
+        IF o1 < SysIOPar.AO1max THEN o1 := SysIOPar.AO1max; END_IF;
+        IF o1 > SysIOPar.AO1min THEN o1 := SysIOPar.AO1min; END_IF;
+        scale_o1( x := o1, x1 :=  100.0, x2 := 0.0);
+    END_IF;
+    A65.ao.pwr := REAL_TO_INT(scale_o1.y);
+
+    //Digital Outputs
+    A65.do.avr_on               := avr.DigOutputs.Status.Enable;
+    A65.do.field_flash_on	    := avr.DigOutputs.Status.FieldFlashOn;
+	A65.do.voltage_nominal      := avr.DigOutputs.Status.VoltageOK;
+    A65.do.avr_force_crowbar    := A65.di.avr_trip OR NOT avr.DigOutputs.Status.Enable;
+    A65.do.online               := CB52.st.closed;
+    A65.do.avr_limiter_on       := avr.DigOutputs.Alarm.LimiterMin OR avr.DigOutputs.Alarm.LimiterMax;
+    	
+(******************************************************
+****************** Hour Meter  ********************
+*******************************************************)	
+	hour_running	( enable := meter.Out.Rot > 0 ); // Maybe put frequency too?
+	hour_online		( enable := gov.DigInputs.Online OR avr.DigInputs.Online );
+
+(******************************************************
+****************** Energy Meter  ********************
+*******************************************************)	
+	energy_active	(
+		enable	:= TRUE,
+		power	:= meter.In.Pm
+	);
+	energy_reactive	(
+		enable	:= TRUE,
+		power	:= meter.In.Qm
+	);	
+	
+	// Events:
+//	EvtGroup( ident := Event );
+	 
+END_PROGRAM

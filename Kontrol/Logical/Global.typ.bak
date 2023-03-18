@@ -1,0 +1,15 @@
+(*********************************************************************************
+ * Copyright: Microsoft
+ * Author:    sandrionir
+ * Created:   February 21, 2017/7:19 AM 
+ *********************************************************************************
+ * Global data types of project
+ *********************************************************************************)
+
+TYPE
+	PgsVersionType : 	STRUCT 
+		X : UINT;
+		Y : UINT;
+		Z : UINT;
+	END_STRUCT;
+END_TYPE

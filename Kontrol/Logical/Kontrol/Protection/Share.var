@@ -1,0 +1,13 @@
+(*Inputs*)
+VAR
+	Protection : PgsProtType;
+END_VAR
+(*Parameters*)
+VAR
+	ProtPar : PgsProtParType;
+END_VAR
+(*Outputs*)
+VAR
+	ProtFlag : PgsProtFlagType;
+	ExcTemp : REAL;
+END_VAR

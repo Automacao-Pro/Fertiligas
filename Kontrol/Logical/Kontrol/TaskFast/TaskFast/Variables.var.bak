@@ -1,0 +1,10 @@
+VAR
+    uf_filter : LCRMovAvgFlt;
+    if_filter : LCRMovAvgFlt;
+    (*EvtGroup : PgsEvtGroup;*)
+END_VAR
+(*
+VAR RETAIN
+	EvtMemory : ARRAY[0..1999] OF USINT;
+END_VAR
+*)

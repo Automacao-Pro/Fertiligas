@@ -1,0 +1,43 @@
+(*PWR*)
+VAR
+	pwr_tp : TP;
+	pwr_ton : TON;
+	pwr_mem : BOOL;
+	filter_pwr : PgsFiltro := (CTE:=100);
+END_VAR
+(*RPM*)
+VAR
+	rpm1 : PgsRPM;
+	rpm2 : PgsRPM;
+	filter_rpm1 : PgsFiltro;
+	filter_rpm2 : PgsFiltro;
+	rpm_tof : TOF;
+END_VAR
+(*Analog Inputs*)
+VAR
+	scale_if : LCRScal;
+	scale_uf : LCRScal;
+	scale_pos1 : LCRScal;
+	scale_pos2 : LCRScal;
+	scale_pos3 : LCRScal;
+END_VAR
+(*Analog Outputs*)
+VAR
+	o1 : REAL;
+	o2 : REAL;
+	o3 : REAL;
+	o4 : REAL;
+	scale_o1 : LCRScal;
+	scale_o2 : LCRScal;
+	scale_o3 : LCRScal;
+	scale_o4 : LCRScal;
+END_VAR
+(*Event*)
+(*
+VAR
+	EvtGroup : PgsEvtGroup;
+END_VAR
+VAR RETAIN
+	EvtMemory : ARRAY[0..1999] OF USINT;
+END_VAR
+*)

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<BR.AS.HardwareTopology Version="0.0.0.1">
+  <TimeStamps>
+    <TimeStamp LogicalPath="Config1.Hardware.hw" LastWriteTime="03/24/2021 13:38:42" />
+  </TimeStamps>
+  <Modules>
+    <Module Name="PSA" Type="ModbusTcp_any" X="197" Y="239" />
+    <Module Name="A1.1" Type="X20CM0985-1" X="264" Y="100" />
+    <Module Name="X20BM11i" Type="X20BM11" X="355" Y="100" />
+    <Module Name="A1.2" Type="X20AO4622" X="355" Y="100" />
+    <Module Name="X20TB12j" Type="X20TB12" X="355" Y="127" />
+    <Module Name="X20BM11e" Type="X20BM11" X="368" Y="100" />
+    <Module Name="A1.3" Type="X20AI4622" X="368" Y="100" />
+    <Module Name="X20TB12e" Type="X20TB12" X="368" Y="127" />
+    <Module Name="X20BM11f" Type="X20BM11" X="381" Y="100" />
+    <Module Name="A1.4" Type="X20AI4622" X="381" Y="100" />
+    <Module Name="X20TB12f" Type="X20TB12" X="381" Y="127" />
+    <Module Name="X20BM11g" Type="X20BM11" X="394" Y="100" />
+    <Module Name="A1.5" Type="X20AT4222" X="394" Y="100" />
+    <Module Name="X20TB12g" Type="X20TB12" X="394" Y="127" />
+    <Module Name="X20BM11h" Type="X20BM11" X="407" Y="100" />
+    <Module Name="A1.6" Type="X20AT4222" X="407" Y="100" />
+    <Module Name="X20TB12h" Type="X20TB12" X="407" Y="127" />
+    <Module Name="X20BM11" Type="X20BM11" X="420" Y="100" />
+    <Module Name="A1.7" Type="X20DO9322" X="420" Y="100" />
+    <Module Name="X20TB12" Type="X20TB12" X="420" Y="127" />
+    <Module Name="X20BM11c" Type="X20BM11" X="433" Y="100" />
+    <Module Name="A1.8" Type="X20DI9371" X="433" Y="100" />
+    <Module Name="X20TB12c" Type="X20TB12" X="433" Y="127" />
+    <Module Name="X20BM11d" Type="X20BM11" X="446" Y="100" />
+    <Module Name="A1.9" Type="X20DI9371" X="446" Y="100" />
+    <Module Name="X20TB12d" Type="X20TB12" X="446" Y="127" />
+    <Module Name="A1" Type="X20CP1382" X="100" Y="100" />
+    <Module Name="A1.0" Type="X20IF1030" X="199" Y="100" />
+    <Module Name="X3" Type="X3" X="251" Y="103" />
+    <Module Name="X20TB1F2" Type="X20TB1F" X="251" Y="126" />
+    <Module Name="X2" Type="X2" X="238" Y="103" />
+    <Module Name="X20TB1F1" Type="X20TB1F" X="238" Y="126" />
+    <Module Name="X1" Type="X1" X="225" Y="103" />
+    <Module Name="X20TB1F" Type="X20TB1F" X="225" Y="126" />
+  </Modules>
+  <Links>
+    <Link From="A1" To="PSA" FromPort="IF2" ToPort="ETH1" IsRoutedByUser="False">
+      <Point X="134" Y="188" />
+      <Point X="134" Y="188" />
+      <Point X="134" Y="203" />
+      <Point X="134" Y="295" />
+      <Point X="231" Y="295" />
+      <Point X="231" Y="290" />
+      <Point X="231" Y="283" />
+      <Point X="231" Y="283" />
+    </Link>
+  </Links>
+  <InfoElements />
+</BR.AS.HardwareTopology>

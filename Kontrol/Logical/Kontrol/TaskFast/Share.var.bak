@@ -1,0 +1,5 @@
+VAR
+	UfAvg : REAL;
+	IfAvg : REAL;
+	fast : BOOL;
+END_VAR

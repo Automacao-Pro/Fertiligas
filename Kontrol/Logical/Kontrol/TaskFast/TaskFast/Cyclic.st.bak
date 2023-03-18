@@ -1,0 +1,15 @@
+
+PROGRAM _CYCLIC
+	
+    //Uf : Field Voltage
+    uf_filter( x := INT_TO_REAL(A65.ai.uf) );
+    UfAvg   := uf_filter.y;
+    //If : Field Voltage
+    if_filter( x := INT_TO_REAL(A65.ai.if) );
+    IfAvg   := if_filter.y;    
+
+    //Event
+//    EvtGroup( ident := Event );
+        
+ 
+END_PROGRAM

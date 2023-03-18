@@ -1,0 +1,3 @@
+VAR
+	Event : UDINT;
+END_VAR

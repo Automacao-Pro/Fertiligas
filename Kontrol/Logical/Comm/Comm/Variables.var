@@ -1,0 +1,18 @@
+VAR
+	mbusData : PgsMbDataOpen;
+	mbusDevice : PgsMbDevice;
+	mbusSetBlock : PgsMbSetBlock;
+	mbusSetLink : PgsMbSetLink;
+	mbusDataClose : PgsMbDataClose;
+	mbusLinkClose : PgsMbLinkClose;
+	mbusTcpOpen : PgsMbTcpOpen;
+	mbusTcpUpdate : PgsMbTcpUpdate;
+	mbusTcpClose : PgsMbTcpClose;
+	telnetOpen : PgsTelnetOpen;
+	telnetUpdate : PgsTelnetUpdate;
+	telnetClose : PgsTelnetClose;
+END_VAR
+(*Reset COM*)
+VAR
+	ton_reset_Tcp : TON;
+END_VAR

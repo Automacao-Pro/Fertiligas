@@ -1,0 +1,5 @@
+VAR
+	Update0985 : BOOL;
+	(*UpdateAI4622 : BOOL;
+	UpdateAO4622 : BOOL;*)
+END_VAR

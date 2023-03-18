@@ -1,0 +1,121 @@
+(*Excitation*)
+VAR
+	ExcPhaseFault : PgsProtPhaseFault;
+	timer_crowbar : TON;
+	LExc_Crowbar : PgsProgLatch;
+	LExc_OverTemp : PgsProgLatch;
+END_VAR
+(*Phase Sequence Elements*)
+VAR
+	V0 : PgsProtSeq0;
+	V1 : PgsProtSeq1;
+	V2 : PgsProtSeq2;
+	I0 : PgsProtSeq0;
+	I1 : PgsProtSeq1;
+	I2 : PgsProtSeq2;
+END_VAR
+(*timers*)
+VAR
+	ton_ugseq : TON;
+	ton_igseq : TON;
+	ton_ubseq : TON;
+END_VAR
+(*Latchs*)
+VAR
+	L86E : PgsProgLatch;
+	L86H : PgsProgLatch;
+END_VAR
+(*Protection 59*)
+VAR
+	L59A_L1 : PgsProgLatch;
+	L59B_L1 : PgsProgLatch;
+	L59C_L1 : PgsProgLatch;
+	L59AB_L1 : PgsProgLatch;
+	L59BC_L1 : PgsProgLatch;
+	L59CA_L1 : PgsProgLatch;
+	L59V1_L1 : PgsProgLatch;
+	L59Q_L1 : PgsProgLatch;
+	L59G_L1 : PgsProgLatch;
+	L59A_L2 : PgsProgLatch;
+	L59B_L2 : PgsProgLatch;
+	L59C_L2 : PgsProgLatch;
+	L59AB_L2 : PgsProgLatch;
+	L59BC_L2 : PgsProgLatch;
+	L59CA_L2 : PgsProgLatch;
+	L59V1_L2 : PgsProgLatch;
+	L59Q_L2 : PgsProgLatch;
+	L59G_L2 : PgsProgLatch;
+END_VAR
+(*Protection 27*)
+VAR
+	L27A_L1 : PgsProgLatch;
+	L27B_L1 : PgsProgLatch;
+	L27C_L1 : PgsProgLatch;
+	L27AB_L1 : PgsProgLatch;
+	L27BC_L1 : PgsProgLatch;
+	L27CA_L1 : PgsProgLatch;
+	L27V1_L1 : PgsProgLatch;
+	L27A_L2 : PgsProgLatch;
+	L27B_L2 : PgsProgLatch;
+	L27C_L2 : PgsProgLatch;
+	L27AB_L2 : PgsProgLatch;
+	L27BC_L2 : PgsProgLatch;
+	L27CA_L2 : PgsProgLatch;
+	L27V1_L2 : PgsProgLatch;
+END_VAR
+(*Protection 81*)
+VAR
+	L81O_L1 : PgsProgLatch;
+	L81O_L2 : PgsProgLatch;
+	L81U_L1 : PgsProgLatch;
+	L81U_L2 : PgsProgLatch;
+END_VAR
+(*Protection 32*)
+VAR
+	L32OP_L1 : PgsProgLatch;
+	L32UP_L1 : PgsProgLatch;
+	L32OQ_L1 : PgsProgLatch;
+	L32UQ_L1 : PgsProgLatch;
+END_VAR
+(*Protection 24*)
+VAR
+	L24_L1 : PgsProgLatch;
+END_VAR
+(*Protection 40*)
+VAR
+	L40_L1 : PgsProgLatch;
+	L40_L2 : PgsProgLatch;
+END_VAR
+(*Protection 50*)
+VAR
+	L50PA_L1 : PgsProgLatch;
+	L50PB_L1 : PgsProgLatch;
+	L50PC_L1 : PgsProgLatch;
+	L50Q_L1 : PgsProgLatch;
+	L50G_L1 : PgsProgLatch;
+	L50PA_L2 : PgsProgLatch;
+	L50PB_L2 : PgsProgLatch;
+	L50PC_L2 : PgsProgLatch;
+	L50Q_L2 : PgsProgLatch;
+	L50G_L2 : PgsProgLatch;
+END_VAR
+(*Protection 51*)
+VAR
+	L51VA_L1 : PgsProgLatch;
+	L51VB_L1 : PgsProgLatch;
+	L51VC_L1 : PgsProgLatch;
+	L51PA_L1 : PgsProgLatch;
+	L51PB_L1 : PgsProgLatch;
+	L51PC_L1 : PgsProgLatch;
+	L51Q_L1 : PgsProgLatch;
+	L51G_L1 : PgsProgLatch;
+END_VAR
+(*Event*)
+(*
+VAR
+	EvtGroup : PgsEvtGroup;
+END_VAR
+VAR RETAIN
+	EvtMemory : ARRAY[0..1999] OF USINT;
+END_VAR
+*)

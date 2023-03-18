@@ -1,0 +1,39 @@
+
+PROGRAM _CYCLIC
+         
+    CfgNet();
+
+	IF PgsTagValid(TagManager.ident) AND Update0985 THEN
+		Update0985 := FALSE;
+        cm0985();
+		cm0985Gen();
+		cm0985Main();
+		cm0985Bus();
+		cm0985GenPu();
+        cm0985GenPf();
+        cm0985GenPa();
+        cm0985GenPc();
+        cm0985GenPp();
+		cm0985DO1();
+        cm0985Sync();
+	END_IF
+    cm0985Update();
+    
+	// Modulos de Temperatura;
+	HW.EA.AT_A1_3();
+	HW.EA.AT_A1_4();
+	HW.EA.AT_A1_5();
+    
+//    IF PgsTagValid(TagManager.ident) AND UpdateAI4622 THEN
+//		UpdateAI4622 := FALSE;
+//        ai4622();
+//	END_IF    
+//    ai4622Update();
+//        
+//    IF PgsTagValid(TagManager.ident) AND UpdateAO4622 THEN
+//		UpdateAO4622 := FALSE;
+//        ao4622();
+//	END_IF    
+//    ao4622Update();
+
+END_PROGRAM

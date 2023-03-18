@@ -1,0 +1,32 @@
+(*Hardware*)
+VAR
+	HW : PgsHW;
+	CfgNet : PgsCfgNet := (parameter:=(if2:=(HostName:='Kontroll',baudrate:=PGS_CFG_NET_BAUDRATE_AUTO,mode:=PGS_CFG_NET_MODE_MANUAL,gateway:='192.168.0.1',ip:='192.168.0.100',mask:='255.255.255.0',ina:=1),if3:=(mode:=PGS_CFG_NET_MODE_MANUAL,ip:='10.0.0.100',mask:='255.0.0.0',ina:=2),ntp:=(timezone:=UTC03N,serverAddr1:='200.160.7.186',serverAddr2:='201.49.148.135',serverAddr3:='200.186.125.195',serverAddr4:='200.20.186.76')));
+END_VAR
+(*X20CM0985-1*)
+VAR
+	cm0985IO : PgsCM0985io;
+	cm0985 : Pgs0985 := (Fnom:=60.0,EnableSetDO5:=TRUE,EnableSetDO6:=TRUE,ClockWise:=TRUE);
+	cm0985DO1 : Pgs0985DO1 := (ResetManual:=FALSE,T59_1:=FALSE,T59_2:=FALSE,T27_1:=FALSE,T27_2:=FALSE,T81O_1:=FALSE,T81O_2:=FALSE,T81U_1:=FALSE,T81U_2:=FALSE,T60V:=FALSE,T60I:=FALSE,T50N:=FALSE,T50:=FALSE,T51:=FALSE,T32Q:=FALSE,T32P:=FALSE,T32N:=FALSE);
+	cm0985Main : Pgs0985Main := (Enable3phase:=FALSE,Connection1:=PGS_0985_CON_ABC,V1prim:=115,V1sec:=115,V1nom:=115,Connection2:=PGS_0985_CON_ABCN,V2prim:=115,V2sec:=115,V2nom:=115);
+	cm0985Bus : Pgs0985Bus := (Connection:=PGS_0985_CON_ABC,Vprim:=115,Vsec:=115,Vnom:=115);
+	cm0985Sync : Pgs0985Sync := (Mode:=PGS_0985_SYNC_X4_X3,ChangeDO4toDo6:=FALSE,dFmax:=0.3,dFmin:=-0.3,dUmax:=10,dAngleMax:=5,PhaseShift:=0,UBmin:=0.05,DO4Pulse:=1,DO4SwTime:=0.1,DO6Pulse:=1,DO6SwTime:=0.1);
+	cm0985Meter : Pgs0985Meter;
+	cm0985Gen : Pgs0985Gen := (Connection:=PGS_0985_CON_ABCN,Vprim:=115,Vsec:=115,Vnom:=115,Iprim:=5,Isec:=5,Inom:=5,EnableHarmonic:=FALSE,Tfilter:=100,D02Pulse:=1);
+	cm0985GenPu : Pgs0985GenPu;
+	cm0985GenPf : Pgs0985GenPf;
+	cm0985GenPa : Pgs0985GenPa;
+	cm0985GenPc : Pgs0985GenPc;
+	cm0985GenPp : Pgs0985GenPp;
+	cm0985Update : Pgs0985Update;
+END_VAR
+(*X20AO4622*)
+VAR
+	ao4622 : PgsAO4622 := (Channel1:=PGS_AO4622_4_20_mA,Channel2:=PGS_AO4622_0_20_mA,Channel3:=PGS_AO4622_0_20_mA,Channel4:=PGS_AO4622_0_20_mA);
+	(*ao4622Update : PgsAO4622Update;*)
+END_VAR
+(*X20AI4622*)
+VAR
+	ai4622 : PgsAI4622 := (FilterLevel:=PGS_AI4622_FILTER_LEVEL_002,RampLimit:=PGS_AI4622_RAMP_255,UpperLimit:=32767,LowerLimit:=-32768,Channel1:=PGS_AI4622_0_20_mA,Channel2:=PGS_AI4622_0_20_mA,Channel3:=PGS_AI4622_0_20_mA,Channel4:=PGS_AI4622_0_20_mA);
+	(*ai4622Update : PgsAI4622Update;*)
+END_VAR
