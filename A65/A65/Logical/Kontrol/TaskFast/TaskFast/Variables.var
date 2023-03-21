@@ -1,4 +1,0 @@
-VAR
-	uf_filter : PgsFiltro;
-	if_filter : PgsFiltro;
-END_VAR

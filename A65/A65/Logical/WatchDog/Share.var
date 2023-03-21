@@ -1,4 +1,0 @@
-VAR
-	WDOK : BOOL := TRUE;
-	License : PgsLicense;
-END_VAR

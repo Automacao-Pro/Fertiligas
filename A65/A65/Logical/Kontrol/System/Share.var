@@ -1,7 +1,0 @@
-(*System Parameters*)
-VAR
-	SysPar : PgsSysParType := (Sync:=(U1Prim:=115,U1Sec:=115,Enable3Phase:=0,Connection:=0,U1Nom:=115,UBmin:=0.05,dFmax:=0.3,dFmin:=-0.3,dUmax:=10,dAngleMax:=5,PhaseShift:=0),Exc:=(UexcPrim:=80,UexcSec:=80,UexcNom:=80),Gen:=(UmPrim:=380,UmSec:=380,ImPrim:=800,ImSec:=5,UmNom:=380,SmNom:=500,FmNom:=60,UfMin:=0,UfMax:=150,UfNom:=100,IfMin:=0,IfMax:=20,IfNom:=10,RpmNom:=2000,PPR1:=500,Pos1_0p:=4,Pos1_100p:=20,Pos2_0p:=4,Pos2_100p:=20,Pos3_0p:=4,Pos3_100p:=20,ClockWise:=1,Connection:=0,dRpm1Max:=50,PPR2:=500,dRpm2Max:=50));
-	SysUpdate : PgsSysUpdateType;
-	SysIOPar : PgsIOParType := (AI1Type:=2,AI2Type:=2,AI3Type:=2,AI4Type:=2,AO1Type:=1,AO2Type:=2,AO3Type:=2,AO4Type:=2,AO1min:=0,AO1max:=100,AO2min:=0,AO2max:=100,AO3min:=0,AO3max:=100,AO4min:=0,AO4max:=100);
-	MdbMeter : ARRAY[0..100] OF REAL;
-END_VAR

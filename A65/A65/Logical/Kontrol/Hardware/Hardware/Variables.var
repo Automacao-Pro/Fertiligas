@@ -1,5 +1,0 @@
-VAR
-	Update0985 : BOOL; (*UpdateAI4622 : BOOL;
-	UpdateAO4622 : BOOL;*)
-	reset_cfg_net : TON;
-END_VAR

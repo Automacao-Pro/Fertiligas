@@ -1,5 +1,0 @@
-VAR
-	TagManager : PgsTagOpen;
-	TagUpdate : PgsTagUpdate;
-	TagClose : PgsTagClose;
-END_VAR

@@ -1,4 +1,0 @@
-VAR
-	Var_cmd : BOOL;
-	Var_par : REAL;
-END_VAR
